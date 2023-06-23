@@ -1,11 +1,14 @@
+# Handlers for initial account creation
+
 import logging
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import  CallbackQueryHandler, CommandHandler,  Filters, Updater, ConversationHandler, MessageHandler
 from new_models import User, Vendor, Student
 
-
+# user instance
 current_user = User()
 
+# start handler
 def start( update, bot):
         current_user = User()
         if current_user.is_user(update.effective_user.id):
@@ -56,21 +59,7 @@ def start( update, bot):
             )
             
             return 0
-# def start(update, bot):
-#     current_user=User()
-#     reply_keyboard = [
-#                 [InlineKeyboardButton(text="Let's Go!", callback_data="go")],
-#             ]
-#     markup = InlineKeyboardMarkup(reply_keyboard)
-#     bot.bot.send_message(
-#         chat_id = update.message.chat_id,
-#         text = "Welcome to Byte & Crunch Telegram Bot!",
-#         reply_markup = markup
-
-#         )
-            
-#     return 0
-
+# choose user type
 def choose( update, bot):
     query = update.callback_query
     reply_keyboard = [
@@ -85,7 +74,7 @@ def choose( update, bot):
     )
     return 1
 
-
+# handle account creation based on chosen roles
 def sort_roles( update, bot):
     query = update.callback_query
     role = update.callback_query.data
@@ -134,7 +123,7 @@ def sort_roles( update, bot):
                 '''
             )
             return "student"
-
+# receive and confirm entered details for vendors
 def vendor_detail( update, bot):
         user_id = update.effective_user.id
         role = current_user.role
@@ -164,6 +153,7 @@ def vendor_detail( update, bot):
 
         return 2
 
+# receive and confirm entered details for vendors
 def student_detail( update, bot):
         user_id = update.effective_user.id
         role = current_user.role
@@ -193,7 +183,7 @@ def student_detail( update, bot):
             reply_markup=mark_up
         )
         return 2
-
+# save user to database
 def submit( update, bot):
         chat_id = update.effective_chat.id
         if update.callback_query.data == "save":
