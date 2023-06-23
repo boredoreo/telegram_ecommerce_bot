@@ -53,7 +53,7 @@ def browse_vendors_extended(update,bot):
     with open(vend[1]+".jpg", 'wb') as f:
         f.write(image)
 
-    if state is len(my_vendors):
+    if state == len(my_vendors):
         reply_keyboard = [
             [
                 InlineKeyboardButton(text="Previous", callback_data="browse_vendor_{}".format(state-1))
@@ -63,7 +63,7 @@ def browse_vendors_extended(update,bot):
                 InlineKeyboardButton(text="Delete",  callback_data="delete_product")
             ]
         ]
-    elif state is 1:
+    elif state == 1:
         reply_keyboard = [
             [
                 InlineKeyboardButton(text="Next", callback_data="browse_vendor_{}".format(state+1))
