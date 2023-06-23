@@ -9,6 +9,8 @@ class User:
     userid = None
     role = None
     #Either Vendor() or Student()
+    # User type is an instance of either Vendor or Student Models
+    # And it's values should be entered manually => User().user_type = Vendor(<arguments>)
     user_type = None
     mycon = connector.connect(
         host=os.environ["DB_HOST"],
@@ -92,7 +94,7 @@ class Student():
              )
         self.mycon.commit()
 
-
+# Vendor model
 class Vendor:
     mycon = connector.connect(
         host=os.environ["DB_HOST"],
@@ -149,6 +151,7 @@ class Vendor:
             )
         self.mycon.commit()
 
+# Product Model
 class Product:
     mycon = connector.connect(
         host=os.environ["DB_HOST"],
@@ -192,7 +195,8 @@ class Product:
         return crsr.fetchall()
 
 
-
+    # Edit product 
+    # Doesn't work yet 
     def edit(self, name, image, description, price, instance):
         crsr = self.mycon.cursor()
         crsr.execute(
@@ -209,7 +213,7 @@ class Product:
         )
         self.mycon.commit()
 
-
+# Order Item
 class OrderItem:
     
     mycon = connector.connect(
