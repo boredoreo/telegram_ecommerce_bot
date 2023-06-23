@@ -4,6 +4,7 @@ import os
 
 load_dotenv()
 
+#function to create database
 def create_database(host, user, password, name):
     mydb = connector.connect(
         host=os.environ["DB_HOST"],
@@ -11,9 +12,11 @@ def create_database(host, user, password, name):
         password=os.environ["DB_PASSWORD"]
     )
     mycursor = mydb.cursor()
-    mycursor.execute("CREATE DATABASE {}".format(name))
+    mycursor.execute(
+        "CREATE DATABASE %s ",
+        (name,))
     mydb.commit() 
-
+# function to cretae tables in database
 def create_table(host, user, password, name, fields):
     mydb = connector.connect(
         host=os.environ["DB_HOST"],
@@ -37,7 +40,7 @@ tables = {
 
 }
 
-create_database("localhost", "root", "302914", "ByteNCrunch")
+# create_database("localhost", "root", "302914", "ByteNCrunch")
 for key, val in tables.items():
     create_table("localhost", "", "302914", key, val
     )
