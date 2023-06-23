@@ -10,3 +10,4 @@
 -[ ]Add Decorators for role user based access  
 -[ ]Add change role function so courier accounts can switch between customer and curier roles  
 -[ ]Move long/repeated strings and inline keyboards into their own python files  
+-[ ]Edit Vendor table and add a column to describe location in cafe
