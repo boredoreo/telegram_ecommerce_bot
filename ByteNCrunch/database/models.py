@@ -23,16 +23,16 @@ class Student:
     def __str__(self):
         return self.role
 
-    def load_to_dict(self):
-        return {
-            "role" : self.role,
-            "userid" : self.userid,
-            "name":self.name,
-            "matno":self.matno,
-            "room" : self.room,
-            "account_nuumber" : self.account_number,
-            "bank": self.bank
-        }
+    # def load_to_dict(self):
+    #     return {
+    #         "role" : self.role,
+    #         "userid" : self.userid,
+    #         "name":self.name,
+    #         "matno":self.matno,
+    #         "room" : self.room,
+    #         "account_nuumber" : self.account_number,
+    #         "bank": self.bank
+    #     }
 
 class Vendor:    
     
@@ -55,15 +55,15 @@ class Vendor:
         self.bank =  bank
 
     def load_to_dict(self):
-        return {
-            "userid" : self.userid,
-            "name":self.name,
-            "shop_name":self.shop_name,
-            "email" : self.email,
-            "phone_no" : self.phone_no,
-            "account_nuumber" : self.account_number,
-            "bank": self.bank
-        }
+        # return {
+        #     "userid" : self.userid,
+        #     "name":self.name,
+        #     "shop_name":self.shop_name,
+        #     "email" : self.email,
+        #     "phone_no" : self.phone_no,
+        #     "account_nuumber" : self.account_number,
+        #     "bank": self.bank
+        # }
     
     def __str__(self):
         return "vendor"
