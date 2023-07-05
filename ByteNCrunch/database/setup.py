@@ -1,15 +1,16 @@
 import mysql.connector as connector
 from dotenv.main import load_dotenv
 import os
+from config import *
 
 load_dotenv()
 
 #function to create database
-def create_database(host, user, password, name):
+def create_database(name):
     mydb = connector.connect(
-        host=os.environ["DB_HOST"],
-        user=os.environ["DB_USER"],
-        password=os.environ["DB_PASSWORD"]
+        host = DB_HOST,
+        user =DB_USER,
+        password=DB_PASSWORD
     )
     mycursor = mydb.cursor()
     mycursor.execute(
@@ -17,17 +18,17 @@ def create_database(host, user, password, name):
         (name,))
     mydb.commit() 
 # function to cretae tables in database
-def create_table(host, user, password, name, fields):
+def create_table( name, fields):
     mydb = connector.connect(
-        host=os.environ["DB_HOST"],
-        user=os.environ["DB_USER"],
-        password=os.environ["DB_PASSWORD"],
-        database=os.environ["DATABASE"]
+        host = DB_HOST,
+        user =DB_USER,
+        password=DB_PASSWORD,
+        database=DATABASE
     )
 
-    operation = "CREATE TABLE {} ({})".format(name, fields)
+    
     crsr = mydb.cursor()
-    crsr.execute(operation)
+    crsr.execute("CREATE TABLE {} ({})".format(name, fields))
     mydb.commit()
 
 tables = {
@@ -40,7 +41,8 @@ tables = {
 
 }
 
-# create_database("localhost", "root", "302914", "ByteNCrunch")
-for key, val in tables.items():
-    create_table("localhost", "", "302914", key, val
-    )
+# create_database(DATABASE)
+# for key, val in tables.items():
+#     create_table( key, val
+#     )
+# "localhost", "root", "302914", 
