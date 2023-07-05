@@ -286,7 +286,7 @@ def submit(update, bot):
     return ConversationHandler.END
 
 def cancel(update,bot):
-	update.message.reply_text('Operation canceled', reply_markup=markup)
+	update.message.reply_text('Operation canceled')
 	return ConversationHandler.END
 
 start_handler = ConversationHandler(
