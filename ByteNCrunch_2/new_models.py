@@ -226,10 +226,10 @@ class OrderItem:
         self.product_id, self.order_id, self.item_count = product_id, order_id, item_count
         
     def commit(self):
-        crsr = mycon.cursor()
+        crsr = self.mycon.cursor()
         crsr.eexecute(
             "INSERT INTO order_item (product_id, order_id, item_count)  VALUES (%s, %s, %s)", 
             (self.product_id, self.order_id, self.item_count )
         )
-        mycon.commit()
+        self.mycon.commit()
  
