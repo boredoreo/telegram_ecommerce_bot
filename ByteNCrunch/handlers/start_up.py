@@ -39,6 +39,7 @@ def start(update, bot):
                     Thanks for partnering with us!\nHere's a list of commands available to you:
                     /add_product
                     /view_products
+                    /complaint
                     """,
                 )
                 return ConversationHandler.END
@@ -49,6 +50,7 @@ def start(update, bot):
                     Thanks for partnering with us!\nHere's a list of commands available to you:
                     /add_product
                     /view_products
+                    /complaint
                     """,
                 )
                 return ConversationHandler.END
@@ -59,6 +61,7 @@ def start(update, bot):
                     Thanks for partnering with us!\nHere's a list of commands available to you:
                     /add_product
                     /view_products
+                    /complaint
                     """,
                 )
                 return ConversationHandler.END
