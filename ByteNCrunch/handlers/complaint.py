@@ -41,8 +41,6 @@ def name(update, context):
     complaint['category'] = query.data
     query.answer()
     query.edit_message_text("Please input your full-name: ")
-    id = update.effective_chat.id
-    print(id)
 
     return MATRIC_NO
  

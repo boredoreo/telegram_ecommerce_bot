@@ -35,7 +35,6 @@ class Student:
     #     }
 
 class Vendor:    
-    
     def __init__(
         self, userid = None,
         name = None,
@@ -64,9 +63,8 @@ class Vendor:
         #     "account_nuumber" : self.account_number,
         #     "bank": self.bank
         # }
-    
-    def __str__(self):
-        return "vendor"
+        def __str__(self):
+            return "vendor"
 
 class Product:
     
