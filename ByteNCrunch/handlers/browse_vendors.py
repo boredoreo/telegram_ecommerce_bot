@@ -1,0 +1,75 @@
+import logging, os
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram.ext import  CallbackQueryHandler, CommandHandler,  Filters, Updater, ConversationHandler, MessageHandler
+# from telegram.files.inputmedia import InputMediaPhoto
+# from database.models import  Vendor, Student, Product
+# from database.manipulate import load_blob
+from database.query import get_all_vendors
+
+#TODO
+'''
+*add funtion to fetch product data before sending to browse product handler
+*integrate with ibiang's api
+'''
+def browse_shops_init(update, bot):
+    vendors = get_all_vendors()
+    bot.user_data["vendors"] = vendors
+    browse_state = 5
+    bot.user_data["browse_state"] = browse_state
+    my_vendors = vendors[0:browse_state]
+    reply_keyboard = [
+        [InlineKeyboardButton(text=i.shop_name, callback_data=f"browse_shop_{i.vendor_id}")] for i in my_vendors
+    ] + [
+        [
+            [InlineKeyboardButton(text="Next", callback_data="browse_vendors_next")],
+            [InlineKeyboardButton(text="Previous", callback_data="browse_vendors_previous")]
+        ]
+    ]
+    markup = InlineKeyboardMarkup(reply_keyboard)
+    bot.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="What do you feel like getting today?",
+        reply_markup=markup,
+    )
+
+def browse_vendors(update,bot):
+    match update.callback_query.data:
+        case "browse_vendors_next":
+            state = bot.user_data["browse_state"]
+            my_vendors = bot.user_data["vendors"][state:state+5]
+            bot.user_data["browse_state"] = state + 5
+            reply_keyboard = [
+                [InlineKeyboardButton(text=i.shop_name, callback_data=f"browse_shop_{i.vendor_id}")] for i in my_vendors
+            ] + [
+                [
+                    [InlineKeyboardButton(text="Next", callback_data="browse_vendors_next")],
+                    [InlineKeyboardButton(text="Previous", callback_data="browse_vendors_previous")]
+                ]
+            ]
+            
+            
+        case "browse_vendors_previous":
+            state = bot.user_data["browse_state"]
+            if state > 5:
+                state = bot.user_data["browse_state"]
+                my_vendors = bot.user_data["vendors"][state-5:state]
+                bot.user_data["browse_state"] = state - 5
+                reply_keyboard = [
+                    [InlineKeyboardButton(text=i.shop_name, callback_data=f"browse_shop_{i.vendor_id}")] for i in my_vendors
+                ] + [
+                    [
+                        [InlineKeyboardButton(text="Next", callback_data="browse_vendors_next")],
+                        [InlineKeyboardButton(text="Previous", callback_data="browse_vendors_previous")]
+                    ]
+                ]
+    markup = InlineKeyboardMarkup(reply_keyboard)
+    bot.bot.send_message(
+        chat_id=update.message.chat_id,
+        text="What do you feel like getting today?",
+        reply_markup=markup,
+    )
+
+
+
+browse_vendor_handler = CallbackQueryHandler(callback=browse_shops_init, pattern="make_order", run_async=True)
+browse_vendor_ext_handler = CallbackQueryHandler(callback=browse_vendors, pattern="browse_vendors_", run_async=True)
