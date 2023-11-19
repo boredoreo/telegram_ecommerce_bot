@@ -1,5 +1,0 @@
-SITE_URL = ""
-GET_PRODUCTS = "/api/products"
-GET_PRODUCT = ""
-GET_VENDORS = ""
-GET_VENDOR = ""
