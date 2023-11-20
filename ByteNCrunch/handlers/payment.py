@@ -6,17 +6,26 @@ import uuid
 import requests
 import os
 from dotenv.main import load_dotenv
+from database.query import get_product
 
 load_dotenv()
 
 def flutterwave_handler(update, bot):
+    cart = list(bot.user_data["cart"].items())
     query = update.callback_query
     data = update.callback_query.data
+    for i in cart:
+        product = get_product(i[0])
+        my_text = f"\n >> {i[1]} orders of {product[1]} at # {int(product[3]) * i[1]}"
     total = int(bot.user_data["cart_total"])
+    print(bot.user_data)
+    print("space")
+    print(my_text)
+    
     rate = compute_rates(total)
     subtotal = total + rate
     reference = str(uuid.uuid4())
-    payment = FlutterPayment(amount=subtotal, reference=reference)
+    payment = FlutterPayment(amount=subtotal, reference=reference, user_id=update.effective_user.id)
     payment.save()
     
     

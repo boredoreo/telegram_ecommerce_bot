@@ -52,13 +52,14 @@ class Status(Enum):
 	Cancelled = "cancelled"
 	Pending = "pending"
 	Rejected_By_Vendor = "rejected_by_vendor"
-	
+            
 class FlutterPayment:
-    def __init__(self, id=None, amount=None, reference=None, status='pending', created_at=None):
+    def __init__(self, id=None, amount=None, reference=None, status='pending', created_at=None, user_id=None):
             self.id = id
             self.amount = amount
             self.reference = reference
             self.status = status
+            self.user_id = user_id
             self.created_at = created_at if created_at is not None else datetime.now()
             
     def save(self):
@@ -71,8 +72,8 @@ class FlutterPayment:
 
             mycursor = mycon.cursor()
 
-            sql = "INSERT INTO flutter_payment (amount, reference, status, created_at) VALUES (%s, %s, %s, %s)"
-            val = (self.amount, self.reference, self.status, self.created_at)
+            sql = "INSERT INTO flutter_payment (amount, reference, status, created_at, user_id) VALUES (%s, %s, %s, %s, %s)"
+            val = (self.amount, self.reference, self.status, self.created_at, self.user_id)
 
             mycursor.execute(sql, val)
 
@@ -83,7 +84,7 @@ class FlutterPayment:
             mycon.close()
 
     def __str__(self):
-        return f"FlutterPayment(id={self.id}, amount={self.amount}, reference={self.reference}, status={self.status}, created_at={self.created_at})"
+        return f"FlutterPayment(id={self.id}, amount={self.amount}, reference={self.reference}, status={self.status}, created_at={self.created_at}, user_id={self.user_id})"
 
     def to_dict(self):
         return {
@@ -92,5 +93,7 @@ class FlutterPayment:
             "reference": self.reference,
             "status": self.status.value if self.status else None,
             "created_at": self.created_at.isoformat() if self.created_at else None,
+            "user_id": self.user_id,
         }
             
+
