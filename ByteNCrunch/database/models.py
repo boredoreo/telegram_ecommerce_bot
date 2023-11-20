@@ -1,4 +1,11 @@
 from enum import Enum
+from datetime import datetime
+import mysql.connector as connector
+from dotenv.main import load_dotenv
+import os
+
+load_dotenv()
+
 
 
 class User:
@@ -46,5 +53,44 @@ class Status(Enum):
 	Pending = "pending"
 	Rejected_By_Vendor = "rejected_by_vendor"
 	
-	
+class FlutterPayment:
+    def __init__(self, id=None, amount=None, reference=None, status='pending', created_at=None):
+            self.id = id
+            self.amount = amount
+            self.reference = reference
+            self.status = status
+            self.created_at = created_at if created_at is not None else datetime.now()
+            
+    def save(self):
+            mycon = connector.connect(
+            host=os.environ["DB_HOST"],
+            user=os.environ["DB_USER"],
+            password=os.environ["DB_PASSWORD"],
+            database=os.environ["DATABASE"]
+            )
+
+            mycursor = mycon.cursor()
+
+            sql = "INSERT INTO flutter_payment (amount, reference, status, created_at) VALUES (%s, %s, %s, %s)"
+            val = (self.amount, self.reference, self.status, self.created_at)
+
+            mycursor.execute(sql, val)
+
+            mycon.commit()
+            self.id = mycursor.lastrowid  # Update the object's id with the auto-incremented value
+
+            mycursor.close()
+            mycon.close()
+
+    def __str__(self):
+        return f"FlutterPayment(id={self.id}, amount={self.amount}, reference={self.reference}, status={self.status}, created_at={self.created_at})"
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "amount": str(self.amount),
+            "reference": self.reference,
+            "status": self.status.value if self.status else None,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+        }
             

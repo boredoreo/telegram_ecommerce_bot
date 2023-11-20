@@ -11,7 +11,7 @@ def create_database():
         password=os.environ["DB_PASSWORD"]
     )
     mycursor = mydb.cursor()
-    mycursor.execute("CREATE DATABASE {}".format(os.environ["DATABASE"]))
+    mycursor.execute("CREATE DATABASE IF NOT EXISTS {}".format(os.environ["DATABASE"]))
     mydb.commit()
      
 
@@ -23,7 +23,7 @@ def create_table( name, fields):
         database=os.environ["DATABASE"]
     )
 
-    operation = "CREATE TABLE {} ({})".format(name, fields)
+    operation = "CREATE TABLE IF NOT EXISTS {} ({})".format(name, fields)
     crsr = mydb.cursor()
     crsr.execute(operation)
     mydb.commit()
@@ -37,6 +37,7 @@ tables = {
     # "user" : " userid BIGINT PRIMARY KEY, role CHAR(120) "
 
 }
+tables["flutter_payment"] = "id INT AUTO_INCREMENT PRIMARY KEY, amount DECIMAL(15, 2), reference VARCHAR(100), status CHAR(20) DEFAULT 'pending', created_at DATETIME DEFAULT CURRENT_TIMESTAMP"
 
 def add_vendor(vendor):
     mycon = connector.connect(

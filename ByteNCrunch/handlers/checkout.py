@@ -26,5 +26,4 @@ def checkout(update, bot):
         reply_markup=markup,
     )
 
-
 check_out_handler = CallbackQueryHandler(callback=checkout, pattern="checkout")

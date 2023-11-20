@@ -1,0 +1,47 @@
+ID,Item,Price,Vendor,Additional Options
+1,Bread warmer(1),750,Bread warmer,NULL
+2,Bread warmer(2),950,Bread warmer,NULL
+3,"Crepe & nutella, bananas",600,Churros and crepes menu,NULL
+4,Crepe + eggs + minced meat,900,Churros and crepes menu,NULL
+5,Crepe + eggs,600,Churros and crepes menu,NULL
+6,Crepe + Nutella + cream,800,Churros and crepes menu,NULL
+7,Crepe + salad toppings,600,Churros and crepes menu,NULL
+8,Crepe +chicken rendezvous,1200,Churros and crepes menu,NULL
+9,Crepe + gelato + cream,1500,Churros and crepes menu,NULL
+10,Crepe + grape/strawberry,800,Churros and crepes menu,NULL
+11,Crepe +egg+minced meat+salad,1200,Churros and crepes menu,NULL
+12,Churros + chocolate dips,700,Churros and crepes menu,NULL
+13,Churros + savoury dips,700,Churros and crepes menu,NULL
+14,Double batch churros,1300,Churros and crepes menu,NULL
+15,Churros + chicken dip,1500,Churros and crepes menu,NULL
+16,Regular pizza burger,1000,CU PIZZA BURGER,NULL
+17,Egg pizza burger ,1200,CU PIZZA BURGER,NULL
+18,Pizza burger with extra sausage and chicken,1500,CU PIZZA BURGER,NULL
+19,Pizza burger with ham,1500,CU PIZZA BURGER,NULL
+20,Pizza burger with cheese,1500,CU PIZZA BURGER,NULL
+21,Pizza burger with extra sausage and chicken with cheese,2000,CU PIZZA BURGER,NULL
+22,Pizza burger with ham and cheese,2000,CU PIZZA BURGER,NULL
+23,Chicken suya pizza(Mini) ,1400,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+24,Beef suya pizza(Mini),1400,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+25,Chicken BBQ pizza(Mini) ,1400,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+26,Beef BBQ pizza(Mini) ,1400,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+27,Pizza pepperoni(Mini) ,1600,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+28,Chicken suya pizza(Small) ,1800,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+29,Beef suya pizza(Small),1800,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+30,Chicken BBQ pizza(Small) ,1800,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+31,Beef BBQ pizza(Small) ,1800,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+32,Pizza pepperoni(Small) ,2000,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+33,Chicken suya pizza(Medium) ,2500,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+34,Beef suya pizza(Medium),2500,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+35,Chicken BBQ pizza(Medium) ,2500,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+36,Beef BBQ pizza(Medium) ,2500,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+37,Pizza pepperoni(Medium) ,2700,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+38,Pizza Margherita(Medium) ,2700,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+39,Chicken suya pizza(Big+ 1 free milk shake) ,5000,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+40,Beef suya pizza(Big+ 1 free milk shake),5000,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+41,Chicken BBQ pizza(Big+ 1 free milk shake) ,5000,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+42,Beef BBQ pizza(Big+ 1 free milk shake) ,5000,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+43,Pizza pepperoni(Big+ 1 free milk shake) ,5200,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+44,Pizza magherita(Big+ 1 free milk shake),5200,6:33 Pizza,"extra chesse:1500,Extra chicken and cheese:500,"
+45,Burger,1200,6:33 Pizza,NULL
+46,Milk shake,800,6:33 Pizza,NULL
