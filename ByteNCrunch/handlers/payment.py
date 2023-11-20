@@ -11,21 +11,22 @@ from database.query import get_product
 load_dotenv()
 
 def flutterwave_handler(update, bot):
+    my_order = ""
     cart = list(bot.user_data["cart"].items())
     query = update.callback_query
-    data = update.callback_query.data
-    for i in cart:
-        product = get_product(i[0])
-        my_text = f"\n >> {i[1]} orders of {product[1]} at # {int(product[3]) * i[1]}"
     total = int(bot.user_data["cart_total"])
-    print(bot.user_data)
-    print("space")
-    print(my_text)
-    
+    data = update.callback_query.data
     rate = compute_rates(total)
     subtotal = total + rate
+    for i in cart:
+        product = get_product(i[0])
+        my_order += "{} orders of {} at {} paid {}".format(i[1], product[1], (int(product[3]) *i[1]), subtotal)
+    
+    print(subtotal)
+    print("space")
+    print(my_order)
     reference = str(uuid.uuid4())
-    payment = FlutterPayment(amount=subtotal, reference=reference, user_id=update.effective_user.id)
+    payment = FlutterPayment(amount=subtotal, reference=reference, user_id=update.effective_user.id, order_item=my_order)
     payment.save()
     
     
