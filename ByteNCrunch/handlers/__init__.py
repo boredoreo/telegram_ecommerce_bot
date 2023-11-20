@@ -6,6 +6,7 @@ from .start import start_handler, setup_user_handler, back_to_home
 from .browse_vendors import browse_vendor_handler, browse_vendor_ext_handler
 from .browse_food import browse_product_handler, browse_product_ext_handler
 from .cart import add_to_cart_handler, cart_quantity_handler, confirm_cart, manage_cart_handler
+from .payment import flutterwave_payment_handler
 
 all_handlers = [
     # Start up Handlers
@@ -32,5 +33,8 @@ all_handlers = [
 
     #checkout
     check_out_handler,
+    
+    #flutterwave
+    flutterwave_payment_handler,
 
 ]
