@@ -61,11 +61,12 @@ def commmit_student(student:Student):
     userid = student.userid
     name = student.name
     matno = student.matno
+    email = student.email
     room = student.room
     mycursor = mycon.cursor()
     mycursor.execute(
-        "INSERT INTO student (role, userid, name, matno ,  room) VALUES (%s, %s, %s, %s, %s)",
-        (role, userid,name,matno,room)
+        "INSERT INTO student (role, userid, name, email, matno ,  room) VALUES (%s, %s, %s,%s, %s, %s)",
+        (role, userid,name,email, matno,room)
          )
     mycon.commit()
     mycon.close()
