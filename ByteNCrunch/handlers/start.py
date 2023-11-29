@@ -17,14 +17,14 @@ def start(update, bot):
     if exist:
         reply_keyboard = [
             [InlineKeyboardButton(text="Customer Support", callback_data="customer_feedback")],
-            [InlineKeyboardButton(text="Make Order", callback_data="make_order")]
+            [InlineKeyboardButton(text="Make Order", callback_data="make_order")],
+             [InlineKeyboardButton(text="Manage Cart", callback_data="manage_cart")]
         ]
         markup = InlineKeyboardMarkup(reply_keyboard)
         bot.bot.send_message(
             chat_id=update.effective_chat.id,
             text="""
                 Welcome to Byte & Crunch! \n How may we be of assistance to you?
-                ***SUBJECT TO CHANGE***
                 """,
             reply_markup=markup
         )
@@ -51,7 +51,6 @@ def setup_customer(update, bot):
                 Thank you for chooosing Byte & Crunch!
                 \nWe need some information before you can continue to ordering your food!
                 \nLet's start with  your name!
-                \nPlease enter your full name! 
                 """
             )
     bot.user_data["start_id"] = message.message_id
@@ -89,7 +88,7 @@ def enter_room_address(update, bot):
     bot.bot.delete_message(chat_id=update.effective_chat.id,message_id= bot.user_data["start_id"])
     message = bot.bot.send_message(
         chat_id=update.effective_chat.id,
-        text="Where's your room👀👀👀?"
+        text="Where's your hall and room👀👀👀?"
     )
     bot.user_data["start_id"] = message.message_id
     return "confirm_details"
@@ -137,9 +136,16 @@ def submit(update, bot):
     user_type.userid = update.effective_user.id
     if update.callback_query.data == "save":
         query = update.callback_query
-        commmit_student(user_type)        
+        commmit_student(user_type)      
+        reply_keyboard = [
+         [
+            InlineKeyboardButton(text="Back to home!", callback_data="start")
+        ]
+    ]
+        markup = InlineKeyboardMarkup(reply_keyboard)  
         query.edit_message_text(
-            text="Account Created Successfully! \n /start to view your commands ",
+            text="Account Created Successfully!",
+            reply_markup=markup 
         )
         del bot.user_data['user_type']
         del bot.user_data["start_id"]
@@ -160,13 +166,13 @@ def home(update, bot):
     query = update.callback_query
     reply_keyboard = [
             [InlineKeyboardButton(text="Customer Support", callback_data="customer_feedback")],
-            [InlineKeyboardButton(text="Make Order", callback_data="make_order")]
+            [InlineKeyboardButton(text="Make Order", callback_data="make_order")],
+            [InlineKeyboardButton(text="Manage Cart", callback_data="manage_cart")]
         ]
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
         text="""
             Welcome to Byte & Crunch! \n How may we be of assistance to you?
-            ***SUBJECT TO CHANGE***
             """,
         reply_markup=markup
     )
