@@ -1,6 +1,8 @@
 from flask import Flask, request, make_response, jsonify
 import os
 import json
+from database.query import update_status
+import requests
 
 app = Flask(__name__)
 
@@ -20,10 +22,28 @@ def flutterwave_webhook():
     email = data["customer"]["email"]
     status = data["status"]
     reference = data["txRef"]
+    
+    if status == 'successful' or status == 'SUCCESSFUL':
 
-   
+        try:
+            new_status = update_status(reference, status)
+            print("testing")
+            telegram_token = os.getenv("TOKEN")
+            group_id = os.getenv("order_group_id")
+            message = f"Payment successful for reference: {reference} with email: {email}"
+            requests.get(f"https://api.telegram.org/bot{telegram_token}/sendMessage?chat_id={group_id}&text={message}")
+            return (response)
+            
+        except:
+           print("error")
+        
+    else:
+        new_status = update_status(reference, status)
+        return response
+    
+    
 
-    return response
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

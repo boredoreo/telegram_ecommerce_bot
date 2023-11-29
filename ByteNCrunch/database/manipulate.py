@@ -39,11 +39,12 @@ def commmit_student(student:Student):
     userid = student.userid
     name = student.name
     matno = student.matno
+    email = student.email
     room = student.room
     mycursor = mycon.cursor()
     mycursor.execute(
-        "INSERT INTO student (role, userid, name, matno ,  room) VALUES (%s, %s, %s, %s, %s)",
-        (role, userid,name,matno,room)
+        "INSERT INTO student (role, userid, name, email, matno ,  room) VALUES (%s, %s, %s,%s, %s, %s)",
+        (role, userid,name,email, matno,room)
          )
     mycon.commit()
     mycon.close()
@@ -86,4 +87,8 @@ def push_order(cart_dict, cust_id, cust_name, total):
     order_id = get_last_order((cust_id,cust_name,total))
     for i in cart:
 
+
+def create_order_item():
+    "id INT AUTO_INCREMENT PRIMARY KEY, product_id INT, order_id INT, item_count INT, FOREIGN KEY (product_id) REFERENCES product(id), FOREIGN KEY (order_id) REFERENCES orders(id)"
+    pass
         commit_order_item(i[0], i[1], order_id)

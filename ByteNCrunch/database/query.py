@@ -99,6 +99,56 @@ def get_products_from(myid):
     mycon.close()
     return result
 
+
+def get_student(userid) -> User:
+
+    mycon = connector.connect(
+    host= config.DB_HOST,
+    user=config.DB_USER,
+    password=config.DB_PASSWORD,
+    database=config.DATABASE
+    )
+
+    crsr = mycon.cursor()
+    crsr.execute(
+        "SELECT * FROM student WHERE userid=%s",
+        (userid,)
+        )            
+    result = crsr.fetchall()[0]  
+    mycon.close()
+    return result
+
+def get_status(reference):
+    mycon = connector.connect(
+        host= config.DB_HOST,
+        user= config.DB_USER,
+        password= config.DB_PASSWORD,
+        database= config.DATABASE
+    )
+    crsr = mycon.cursor()
+    crsr.execute(
+        "SELECT * FROM flutter_payment WHERE reference=%s",
+        (reference,)
+    )
+    result = crsr.fetchall()[0]
+    mycon.close()
+    return result
+
+def update_status(reference, status_value):
+    mycon = connector.connect(
+        host=config.DB_HOST,
+        user=config.DB_USER,
+        password=config.DB_PASSWORD,
+        database=config.DATABASE
+    )
+    crsr = mycon.cursor()
+    crsr.execute(
+        "UPDATE flutter_payment SET status=%s WHERE reference=%s",
+        (status_value, reference)
+    )
+    mycon.commit()
+    mycon.close()
+
 def get_last_order(dets):
     mycon = connector.connect(
     host=os.environ["DB_HOST"],
@@ -114,3 +164,4 @@ def get_last_order(dets):
     result = crsr.fetchall()[-1][0]
     mycon.close()
     return result
+

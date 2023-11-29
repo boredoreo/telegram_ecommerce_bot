@@ -3,11 +3,12 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRe
 from telegram.ext import CommandHandler, MessageHandler, ConversationHandler, Filters, CallbackQueryHandler
 import os
 from dotenv.main import load_dotenv
+from filters.helpers import get_student
 
 load_dotenv()
 
 logger = logging.getLogger(__name__)
-NAME, MATRIC_NO, HALL, DESCRIPTION, EMAIL, SUMMARY, CHECK, NAME_MESSAGE= range(8)
+NAME, MATRIC_NO, HALL, DESCRIPTION, SUMMARY, CHECK, NAME_MESSAGE= range(7)
 complaint = {
     'username': 'null',
     'full_name': '',
@@ -66,20 +67,13 @@ def hall(update, context):
      complaint["matric_no"] = update.message.text
      update.message.reply_text("Please enter you hall and room number eg: Daniel E403: ")
      
-     return EMAIL
- 
-def email(update, context):
-     query = update.callback_query
-     logger.info("THis user's room number is %s'", update.message.text)
-     complaint["hall_roomno"] = update.message.text
-     update.message.reply_text("Please input Email address: ")
-     
      return DESCRIPTION
+ 
  
 def desc(update, context):
      query = update.callback_query
      logger.info("This user's email is %s'", update.message.text)
-     complaint["email"] = update.message.text
+     complaint["hall_roomno"] = update.message.text
      update.message.reply_text("Please input your complaint description: ")
      
      return SUMMARY
@@ -88,17 +82,22 @@ def summary(update, context):
      query = update.callback_query
      logger.info("THis user's complaint is %s'", update.message.text)
      complaint["description"] = update.message.text
+     user_id = update.effective_user.id
+     student = get_student(user_id)
+     print(student)
+     user_email = student[4]
+     complaint["email"] = user_email
      reply_keyboard = [
         [InlineKeyboardButton(text="YES", callback_data="YES")],
         [InlineKeyboardButton(text="NO", callback_data="NO")]
      ]
      print(complaint['description'])
      markup = InlineKeyboardMarkup(reply_keyboard)
-     update.message.reply_text(text="""Here are your details:\n "Category":{} \n Name: {} \n Matric number: {} \n Room_number: {} \n Complaint: {} \n\n are these details correct?
+     update.message.reply_text(text="""Here are your details:\n "Category":{} \n Name: {} \n Matric number: {} \n Email: {} \n Room_number: {} \n Complaint: {} \n\n are these details correct?
                                
                                """.format(complaint['category'], complaint["full_name"],
-                                          complaint["matric_no"], complaint["hall_roomno"],
-                                          complaint["description"]), reply_markup=markup)
+                                          complaint["matric_no"], complaint["email"], complaint["hall_roomno"],
+                                          complaint["description"]),reply_markup=markup)
      return CHECK
  
 def check(update, context):
@@ -109,9 +108,9 @@ def check(update, context):
     if check == 'YES':
         query.answer()
         query.edit_message_text("Thank you for your feedback, we'll get back to you shortly\n")
-        group_chat_id = os.getenv('group_id')
+        group_chat_id = os.getenv('complaint_group_id')
         summary_text = f"Category: {complaint['category']}\nName: {complaint['full_name']}\nMatric number: {complaint['matric_no']}\nRoom_number: {complaint['hall_roomno']}\nComplaint: {complaint['description']}"
-        # context.bot.send_message(chat_id=group_chat_id, text=summary_text)
+        context.bot.send_message(chat_id=group_chat_id, text=summary_text)
         return ConversationHandler.END
     elif check == 'NO':
         query.answer()
@@ -119,8 +118,6 @@ def check(update, context):
         return NAME_MESSAGE
     
         
-    
-
 def cancel(update, context) -> int:
     """Cancels and ends the conversation."""
     user = update.message.from_user
@@ -139,7 +136,6 @@ complaint_handler = ConversationHandler(
         MATRIC_NO: [MessageHandler(Filters.text & ~Filters.command, matric_no, run_async=True)],
         HALL: [MessageHandler(Filters.text & ~Filters.command, hall, run_async=True)],
         DESCRIPTION: [MessageHandler(Filters.text & ~Filters.command, desc, run_async=True)],
-        EMAIL: [MessageHandler(Filters.text & ~Filters.command, email,  run_async=True)],
         SUMMARY: [MessageHandler(Filters.text & ~Filters.command, summary,  run_async=True)],
         CHECK: [CallbackQueryHandler(check)]
     },
