@@ -8,7 +8,14 @@ Byte&Crunch Commission Rates
 
 
 '''
+import os
+from dotenv.main import load_dotenv
+import requests
+import uuid
+from database.models import FlutterPayment, Student
+from database.query import get_product, get_user, get_student
 
+load_dotenv()
 
 def compute_rates(price):
     rate = 0
@@ -24,4 +31,52 @@ def compute_rates(price):
         rate = 700
 
     return rate
+
+
+def flutterlink(subtotal, user_id, my_order, reference):
+    payment = FlutterPayment(amount=subtotal, reference=reference, order_item=my_order)
+    payment.save()
+    student = get_student(user_id)
+    print(student)
+    user_email = student[4]
+    print(user_email)
+    print("start")
+    flutterwave_url = 'https://api.flutterwave.com/v3/payments'
+        
+    secret_key = os.environ["FLUTTERWAVE_SECRET_KEY"]
+    headers = {
+        'Authorization': f'Bearer {secret_key}',
+        'Content-Type': 'application/json',
+    }
+    # amount = amount * 100
+    data = {
+        'tx_ref': reference,
+        'amount': subtotal,
+        'customer': {
+            'email': user_email,
+        },
+        'customizations': {
+            'title': "BytenCrunch"
+        },
+        'redirect_url': 'https://eloquentexchange.org/dashboard'
+    }
     
+
+    response = requests.post(flutterwave_url, headers=headers, json=data)
+    response.raise_for_status()  # Raise an HTTPError for bad responses
+    flutterwave_response = response.json()
+
+    if flutterwave_response.get('status', False):
+        payment_url = flutterwave_response['data']['link']
+        print(payment_url)
+        print("Got payment url")
+        return payment_url
+    else:
+        print("Failed to get payment url")
+        return {"status": "failed", "error": "Payment initialization failed"}
+
+def status_check(status):
+    if (status == "successful"  or status == "SUCCESSFUL"):
+        return True
+    else:
+        return False
