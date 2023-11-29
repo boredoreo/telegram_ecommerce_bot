@@ -32,6 +32,14 @@ def compute_rates(price):
 
     return rate
 
+def cart_to_lol(cart):
+    temp_cart = list(cart.items())
+    new_cart = []
+    for item in temp_cart:
+        new_cart.append(list(item))
+
+    return new_cart
+
 
 def flutterlink(subtotal, user_id, my_order, reference):
     payment = FlutterPayment(amount=subtotal, reference=reference, order_item=my_order)
