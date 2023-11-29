@@ -58,7 +58,7 @@ def confirm_direct_transfer(update, bot):
     total = int(bot.user_data["cart_total"])
     name = get_user_name(update.effective_user.id)
     print(name)
-    text_to_send = f"Thanks you for choosing us! \n Please send a copy of your transfer receipt to {name}, @{user_name} to begin processing your order"
+    text_to_send = f"Thanks you for choosing us! \n Please send a copy of your transfer receipt to @david_ornstien or @mikeyruled to begin processing your order"
     push_order(bot.user_data["cart"],update.effective_user.id,name,int(bot.user_data["cart_total"]))
     my_text = f"Order for {name}, "
     print()
