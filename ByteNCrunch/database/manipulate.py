@@ -2,6 +2,7 @@ import mysql.connector as connector
 from dotenv.main import load_dotenv
 from .models import User, Student
 import os
+from .query import get_last_order
 
 load_dotenv()
 
@@ -87,8 +88,4 @@ def push_order(cart_dict, cust_id, cust_name, total):
     order_id = get_last_order((cust_id,cust_name,total))
     for i in cart:
 
-
-def create_order_item():
-    "id INT AUTO_INCREMENT PRIMARY KEY, product_id INT, order_id INT, item_count INT, FOREIGN KEY (product_id) REFERENCES product(id), FOREIGN KEY (order_id) REFERENCES orders(id)"
-    pass
         commit_order_item(i[0], i[1], order_id)
