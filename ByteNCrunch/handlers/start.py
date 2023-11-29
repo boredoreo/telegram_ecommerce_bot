@@ -156,6 +156,21 @@ def submit(update, bot):
 
     return ConversationHandler.END
 
+def home(update, bot):
+    query = update.callback_query
+    reply_keyboard = [
+            [InlineKeyboardButton(text="Customer Support", callback_data="customer_feedback")],
+            [InlineKeyboardButton(text="Make Order", callback_data="make_order")]
+        ]
+    markup = InlineKeyboardMarkup(reply_keyboard)
+    query.edit_message_text(
+        text="""
+            Welcome to Byte & Crunch! \n How may we be of assistance to you?
+            ***SUBJECT TO CHANGE***
+            """,
+        reply_markup=markup
+    )
+
 def cancel(update,bot):
 	update.message.reply_text('Operation canceled')
 	return ConversationHandler.END
@@ -176,4 +191,4 @@ setup_user_handler = ConversationHandler(
     },
     fallbacks=[CommandHandler("cancel", cancel)]
 )
-back_to_home = CallbackQueryHandler(callback=start, pattern="start")
+back_to_home = CallbackQueryHandler(callback=home, pattern="start")

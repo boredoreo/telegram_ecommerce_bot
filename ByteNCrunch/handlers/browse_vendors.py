@@ -28,7 +28,6 @@ def browse_shops_init(update, bot):
     reply_keyboard = buttons + [
         
             [
-                # InlineKeyboardButton(text="Previous", callback_data="browse_vendors_previous"),
                 InlineKeyboardButton(text="Next", callback_data="browse_vendors_next")
             ],
             [
@@ -49,7 +48,6 @@ def browse_vendors(update,bot):
             if bot.user_data["browse_state"] >= len(bot.user_data["vendors"]):
                 state = bot.user_data["browse_state"]
                 my_vendors = bot.user_data["vendors"][state-5:state]
-                # bot.user_data["browse_state"] = state + 5
                 buttons = []
                 for vendor in my_vendors:
                     buttons.append(
@@ -58,7 +56,6 @@ def browse_vendors(update,bot):
                 reply_keyboard =buttons+ [    
                         [
                         InlineKeyboardButton(text="Previous", callback_data="browse_vendors_previous"),
-                        # InlineKeyboardButton(text="Next", callback_data="browse_vendors_next")
                         ],
                         [
                             InlineKeyboardButton(text="Manage Cart", callback_data="manage_cart")
@@ -116,7 +113,6 @@ def browse_vendors(update,bot):
                 reply_keyboard = buttons+[
                     
                     [
-                    # InlineKeyboardButton(text="Previous", callback_data="browse_vendors_previous"),
                     InlineKeyboardButton(text="Next", callback_data="browse_vendors_next")
                     ],
                     [
