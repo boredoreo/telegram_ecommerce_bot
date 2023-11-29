@@ -80,27 +80,40 @@ def add_to_cart_confirm(update, bot):
 
 
 def manage_cart(update, bot):
-    cart = list(bot.user_data["cart"].items())
+    cart = cart_to_lol(bot.user_data["cart"])
     query = update.callback_query
-    my_text = "Here's what you have in your cart right now!"
-    for i in cart:
-        product = get_product(i[0])
-        my_text += f"\n >> {i[1]} orders of {product[1]} at # {int(product[3]) * i[1]}"
+    if len(cart) == 0:
+        my_text = "Nothing to see here!👀"
+        reply_keyboard = [
+            [
+                InlineKeyboardButton(text="Back to Home!", callback_data="start")
+            ]
 
-    
-    reply_keyboard = [
-        
-        [
-             InlineKeyboardButton(text="edit", callback_data="edit_cart"),
-            InlineKeyboardButton(text="Proceed to Checkout", callback_data="checkout")
         ]
+    else:
+        my_text = "Here's what you have in your cart right now!"
+        for i in cart:
+            product = get_product(i[0])
+            my_text += f"\n >> {i[1]} orders of {product[1]} at # {int(product[3]) * i[1]}"
 
-    ]
+        
+        reply_keyboard = [
+            
+            [
+                InlineKeyboardButton(text="edit", callback_data="edit_cart"),
+                InlineKeyboardButton(text="Proceed to Checkout", callback_data="checkout")
+            ] ,
+            [
+                InlineKeyboardButton(text="Back to Home!", callback_data="start")
+            ]
+
+        ]
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
         text=my_text,
         reply_markup=markup,
     )
+
 
 def edit_cart(update, bot):
     query = update.callback_query
