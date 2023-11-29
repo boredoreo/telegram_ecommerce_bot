@@ -165,3 +165,20 @@ def get_last_order(dets):
     mycon.close()
     return result
 
+def get_user_name(userid):
+    mycon = connector.connect(
+    host=os.environ["DB_HOST"],
+    user=os.environ["DB_USER"],
+    password=os.environ["DB_PASSWORD"],
+    database=os.environ["DATABASE"]
+    )
+    crsr = mycon.cursor()
+    crsr.execute(
+        "SELECT * FROM student WHERE userid=%s",
+        (userid,)
+    )
+
+    result = crsr.fetchall()[0][2]
+    mycon.close()
+    print(result)
+    return result
