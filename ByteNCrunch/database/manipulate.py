@@ -89,3 +89,20 @@ def push_order(cart_dict, cust_id, cust_name, total):
     for i in cart:
 
         commit_order_item(i[0], i[1], order_id)
+
+def update_room(user_id, room):
+    mycon = connector.connect(
+    host=os.environ["DB_HOST"],
+    user=os.environ["DB_USER"],
+    password=os.environ["DB_PASSWORD"],
+    database=os.environ["DATABASE"]
+    )
+
+    crsr = mycon.cursor()
+    crsr.execute(
+        "UPDATE student SET room = %s WHERE userid =%s",
+        (room, user_id)
+    )
+    mycon.commit()
+
+    mycon.close()
