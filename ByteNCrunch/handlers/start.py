@@ -18,7 +18,8 @@ def start(update, bot):
         reply_keyboard = [
             [InlineKeyboardButton(text="Customer Support", callback_data="customer_feedback")],
             [InlineKeyboardButton(text="Make Order", callback_data="make_order")],
-             [InlineKeyboardButton(text="Manage Cart", callback_data="manage_cart")]
+             [InlineKeyboardButton(text="Manage Cart", callback_data="manage_cart")],
+             [InlineKeyboardButton(text="Change Delivery Location", callback_data="edit_room")]
         ]
         markup = InlineKeyboardMarkup(reply_keyboard)
         bot.bot.send_message(
@@ -88,7 +89,7 @@ def enter_room_address(update, bot):
     bot.bot.delete_message(chat_id=update.effective_chat.id,message_id= bot.user_data["start_id"])
     message = bot.bot.send_message(
         chat_id=update.effective_chat.id,
-        text="Where's your hall and room👀👀👀?"
+        text="Where's your hall and room👀👀👀? \n This is delivery location(can be changed later in settings)"
     )
     bot.user_data["start_id"] = message.message_id
     return "confirm_details"
@@ -167,7 +168,8 @@ def home(update, bot):
     reply_keyboard = [
             [InlineKeyboardButton(text="Customer Support", callback_data="customer_feedback")],
             [InlineKeyboardButton(text="Make Order", callback_data="make_order")],
-            [InlineKeyboardButton(text="Manage Cart", callback_data="manage_cart")]
+            [InlineKeyboardButton(text="Manage Cart", callback_data="manage_cart")],
+            [InlineKeyboardButton(text="Change Delivery Location", callback_data="edit_room")]
         ]
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
