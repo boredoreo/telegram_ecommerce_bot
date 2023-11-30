@@ -54,9 +54,10 @@ def direct_transfer(update, bot):
 
 def confirm_direct_transfer(update, bot):
     query = update.callback_query
-    user_name = os.environ["byte_user_name"]
+    # user_name = os.environ["byte_user_name"]
     total = int(bot.user_data["cart_total"])
     name = get_user_name(update.effective_user.id)
+    room = get_user_room(update.effective_user.id)
     print(name)
     text_to_send = f"Thanks you for choosing us! \n Please send a copy of your transfer receipt to @david_ornstien or @mikeyruled to begin processing your order"
     push_order(bot.user_data["cart"],update.effective_user.id,name,int(bot.user_data["cart_total"]))
@@ -64,7 +65,7 @@ def confirm_direct_transfer(update, bot):
     print()
     for i in list(bot.user_data["cart"].items()):
         product = get_product(i[0])
-        my_text += f"\n >> {i[1]} order(s) of {product[1]} at # {int(product[3]) * i[1]}"
+        my_text += f"\n >> {i[1]} order(s) of {product[1]} at # {int(product[3]) * i[1]} \n Delivered to {room}"
 
     my_text += f" \n Total(plus shipping) = {total}"
     reply_keyboard = [
