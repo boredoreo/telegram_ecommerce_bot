@@ -5,6 +5,7 @@ from filters.helpers import compute_rates
 from dotenv.main import load_dotenv
 import os
 from database.manipulate import push_order
+from database.query import get_user_name, get_user_room
 
 load_dotenv()
 
@@ -13,12 +14,12 @@ load_dotenv()
 
 def checkout(update, bot):
     query = update.callback_query
-    data = update.callback_query.data
+    # data = update.callback_query.data
     total = int(bot.user_data["cart_total"])
     rate = compute_rates(total)
     reply_keyboard = [
         [
-            InlineKeyboardButton(text="Bank tranfer to Byte n Crunch", callback_data="direct_transfer")
+            InlineKeyboardButton(text="Bank tranfer to Byte n Crunch", callback_data="pay_with_direct_transfer")
         ] ,
         [
             InlineKeyboardButton(text="Pay with FLutterwave", callback_data="pay_with_flutter_wave")
@@ -29,7 +30,6 @@ def checkout(update, bot):
         text=f"You total comes down to # {total+rate} \n Subtotal: #{total} \n Shipping : #{rate}",
         reply_markup=markup,
     )
-
 
 def direct_transfer(update, bot):
     query = update.callback_query
@@ -83,7 +83,8 @@ def confirm_direct_transfer(update, bot):
     bot.user_data["cart_total"] = 0
 
 
+
 check_out_handler = CallbackQueryHandler(callback=checkout, pattern="checkout")
 direct_transfer_handler = CallbackQueryHandler(callback=direct_transfer, pattern="pay_with_direct_transfer")
-confirm_direct_transfer =  CallbackQueryHandler(callback=confirm_direct_transfer, pattern="direct_payment_confirm")
+confirm_direct_transfer_handler =  CallbackQueryHandler(callback=confirm_direct_transfer, pattern="direct_payment_confirm")
 
