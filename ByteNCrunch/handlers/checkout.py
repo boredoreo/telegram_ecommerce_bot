@@ -73,7 +73,8 @@ def confirm_direct_transfer(update, bot):
             InlineKeyboardButton(text="Back to home!", callback_data="start")
         ]
     ]
-    bot.bot.send_message(chat_id=-4050264876, text=my_text)
+    chat_id = os.getenv("order_group_id")
+    bot.bot.send_message(chat_id=chat_id, text=my_text)
     markup = InlineKeyboardMarkup(reply_keyboard)
     query.edit_message_text(
         text=text_to_send,

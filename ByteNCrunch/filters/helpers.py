@@ -13,7 +13,7 @@ from dotenv.main import load_dotenv
 import requests
 import uuid
 from database.models import FlutterPayment, Student
-from database.query import get_product, get_user, get_student
+from database.query import get_student
 
 load_dotenv()
 

@@ -39,7 +39,7 @@ all_handlers = [
     #checkout
     check_out_handler,
     direct_transfer_handler,
-    confirm_direct_transfer
+    confirm_direct_transfer_handler,
     
     #flutterwave
     flutterwave_payment_handler,

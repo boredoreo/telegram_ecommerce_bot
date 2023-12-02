@@ -100,7 +100,7 @@ def get_products_from(myid):
     return result
 
 
-def get_student(userid) -> User:
+def get_student(userid):
 
     mycon = connector.connect(
     host= config.DB_HOST,
