@@ -104,9 +104,9 @@ def populate_vendor_and_product(f_name,):
         reader = csv.DictReader(f)
         for row in reader:
             items.append(row)
-            if row["Vendor"] not in vendors:
-                vendors.append(row["Vendor"])
-                add_vendor(row["Vendor"])
+            if row["Vendor"].title() not in vendors:
+                vendors.append(row["Vendor"].title())
+                add_vendor(row["Vendor"].title())
             add_product(row["Item"], row["Price"], row["Vendor"], row["Additional Options"])
 
     print(vendors)
