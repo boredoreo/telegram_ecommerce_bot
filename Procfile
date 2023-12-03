@@ -1,1 +1,1 @@
-worker: python3 ByteNCrunch/main.py
+app: python3 ByteNCrunch/main.py
