@@ -1,1 +1,1 @@
-app: python ByteNCrunch/main.py
+app: python3 ByteNCrunch/main.py
